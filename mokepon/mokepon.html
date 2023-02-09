@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fantastic Creatures</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section id ="selecciona-tu-mascota">
+        <h1 class = "titulo" > Fantastic Creatures</h1>
+        <h2 class="subtitulo">Elije a tu criatura:</h2>
+    <div  id = "contenedorTarjetas" class="tarjetas"> </div>
+        
+    <button id="boton-mascota"> ¡A luchar! </button>
+    </section>
+        <section id ="seleccionar-ataque"> 
+            <h1 class = "titulo" >Fantastic Creatures</h1>
+            <h2 class="subtitulo"> Elige tu ataque:</h2>
+           
+            <div id="contenedorAtaques"  class="tarjetas-ataques"> </div>
+            <div id= "mensajes">
+                    <p id="Resultado"> Mucha suerte </p>
+                    <section id="REINICIAR"> 
+                     <button  id="boton-reiniciar"> REINICIAR</button>
+                    </section>
+                </div>
+           
+            <div class="container-vidas">
+                <div class="comando-jugador">
+                    <P id = "vidas-jugador">3</P> 
+                    <p id ="mascota-jugador"> </P>
+                    <div id="Ataques-Del-jugador"> </div>
+                </div>
+                <div class="comando-enemigo">
+                    <P id = "vidas-enemigo">3</P> 
+                    <p id ="mascota-enemigo"> </P>
+                    <div id="Ataques-Del-enemigos"> </div>
+                </div>
+            </div>
+        </section>
+        <script src="js/mokepon.js"></script>
+    </body>
+</html>
