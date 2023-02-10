@@ -14,6 +14,8 @@ const ataqueDelEnemigo = document.getElementById("Ataques-Del-enemigos")
 const contenedorTarjetas = document.getElementById("contenedorTarjetas")
 const contenedorAtaques = document.getElementById("contenedorAtaques")
 
+const sectionVerMapa = document.getElementById("ver-mapa")
+const mapa = document.getElementById("mapa")
 
 const fuego = "Fuego";
 const agua = "Agua";
@@ -42,6 +44,7 @@ let victoriasJugador = 0
 let victoriasEnemigo = 0
 let VidasEnemigo = 3
 let VidasJugador = 3
+let lienzo =  mapa.getContext("2d")
 
 class Animalesfantasticos {
     constructor(nombre, foto, vida) {
@@ -106,6 +109,7 @@ animales.push(hippoHaven, capipepo, ratihuey, langostelvis, tucapalma, pydos)
 function iniciarJuego() {
     sectionseleccionarAtaque.style.display = "none"
     sectionReiniciar.style.display = "none"
+    sectionVerMapa.style.display = "none"
     animales.forEach((animales) => {
         opcionDeAnimales = ` 
         <input type="radio" name="mascota" id= ${animales.nombre} />
@@ -129,7 +133,17 @@ function iniciarJuego() {
 
 function selectionMascotaJugador() {
     sectionseleccionarTuMascota.style.display = "none"
-    sectionseleccionarAtaque.style.display = "flex"
+    // sectionseleccionarAtaque.style.display = "flex"
+    sectionVerMapa.style.display = "flex"
+    let imagenDeCapipepo = new Image()
+    imagenDeCapipepo.src = capipepo.foto
+    lienzo.drawImage(
+        imagenDeCapipepo,
+        20,
+        40,
+        100,
+        100
+    )
 
     if (inputHippoHaven.checked) {
         spanMascotaJugador.innerHTML = inputHippoHaven.id
@@ -186,14 +200,17 @@ function secuenciaAtaques() {
                 ataqueJugador.push(fuego)
                 e.target.disabled = true;
                 boton.style.background = "#112f58"
+                boton.disabled = true
             } else if (e.target.innerText === "🌊") {
                 ataqueJugador.push(agua)
                 e.target.disabled = true;
                 boton.style.background = "#112f58"
+                boton.disabled = true
             } else {
                 ataqueJugador.push(tierra)
                 e.target.disabled = true;
                 boton.style.background = "#112f58"
+                boton.disabled = true
             }
             ataqueAleatorioEnemigo()
         })
@@ -233,7 +250,7 @@ function indexAmbosOponentes(jugador, enemigo) {
 }
 
 function combate() {
-    console.log(ataqueJugador,ataqueEnemigo)
+    console.log(ataqueJugador, ataqueEnemigo)
     for (let index = 0; index < ataqueJugador.length; index++) {
         if (ataqueJugador[index] === ataqueEnemigo[index]) {
             indexAmbosOponentes(index, index)
@@ -288,10 +305,6 @@ function crearmensaje(resultado) {
 
 function crearmensajefinal(resltadofianl) {
     sectionMensajes.innerHTML = resltadofianl
-
-    botonFuego.disabled = true
-    botonAgua.disabled = true
-    botonTierra.disabled = true
 
     sectionReiniciar.style.display = "block"
 }
