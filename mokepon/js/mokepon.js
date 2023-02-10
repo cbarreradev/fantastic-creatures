@@ -15,9 +15,9 @@ const contenedorTarjetas = document.getElementById("contenedorTarjetas")
 const contenedorAtaques = document.getElementById("contenedorAtaques")
 
 
-const fuego = "Fuego🔥";
-const agua = "Agua💧";
-const tierra = "Tierra🪴";
+const fuego = "Fuego";
+const agua = "Agua";
+const tierra = "Tierra";
 
 let animales = []
 let ataqueJugador = []
@@ -183,18 +183,15 @@ function secuenciaAtaques() {
     botones.forEach((boton) => {
         boton.addEventListener("click", (e) => {
             if (e.target.innerText === "🔥") {
-                ataqueJugador.push("fuego👌")
-                console.log(ataqueJugador)
+                ataqueJugador.push(fuego)
                 e.target.disabled = true;
                 boton.style.background = "#112f58"
             } else if (e.target.innerText === "🌊") {
-                ataqueJugador.push("agua")
-                console.log(ataqueJugador)
+                ataqueJugador.push(agua)
                 e.target.disabled = true;
                 boton.style.background = "#112f58"
             } else {
-                ataqueJugador.push("Tierra")
-                console.log(ataqueJugador)
+                ataqueJugador.push(tierra)
                 e.target.disabled = true;
                 boton.style.background = "#112f58"
             }
@@ -214,13 +211,13 @@ function ataqueAleatorioEnemigo() {
     let ataqueAleatorio = aleatorio(0, ataquesAnimalesEnemigo.length - 1)
 
     if (ataqueAleatorio == 0 || ataqueAleatorio == 1) {
-        ataqueEnemigo.push("Fuego")
+        ataqueEnemigo.push(fuego)
     } else if (ataqueAleatorio == 3 || ataqueAleatorio == 4) {
-        ataqueEnemigo.push("Agua")
+        ataqueEnemigo.push(agua)
     } else {
-        ataqueEnemigo.push("Tierra")
+        ataqueEnemigo.push(tierra)
     }
-    console.log(ataqueEnemigo)
+
     iniciarPelea()
 }
 
@@ -236,21 +233,22 @@ function indexAmbosOponentes(jugador, enemigo) {
 }
 
 function combate() {
+    console.log(ataqueJugador,ataqueEnemigo)
     for (let index = 0; index < ataqueJugador.length; index++) {
         if (ataqueJugador[index] === ataqueEnemigo[index]) {
             indexAmbosOponentes(index, index)
             crearmensaje("EMPATE 🥹")
-        } else if (ataqueJugador[index] === "fuego" && ataqueEnemigo[index] === "tierra") {
+        } else if (ataqueJugador[index] === fuego && ataqueEnemigo[index] === tierra) {
             indexAmbosOponentes(index, index)
             crearmensaje("GANASTE 🥳")
             victoriasJugador++
             spanVidasJugador.innerHTML = victoriasJugador
-        } else if (ataqueJugador[index] === "agua" && ataqueEnemigo[index] === "fuego") {
+        } else if (ataqueJugador[index] === agua && ataqueEnemigo[index] === fuego) {
             indexAmbosOponentes(index, index)
             crearmensaje("GANASTE 🥳")
             victoriasJugador++
             spanVidasJugador.innerHTML = victoriasJugador
-        } else if (ataqueJugador[index] === "tierra" && ataqueEnemigo[index] === "agua") {
+        } else if (ataqueJugador[index] === tierra && ataqueEnemigo[index] === agua) {
             indexAmbosOponentes(index, index)
             crearmensaje("GANASTE 🥳")
             victoriasJugador++
