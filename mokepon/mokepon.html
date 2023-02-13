@@ -14,8 +14,13 @@
     <button id="boton-mascota"> ¡A luchar! </button>
     </section>
     <section id="ver-mapa">
-        <h1 class = "titulo" >Recorre el mapa con tu mascota</h1>
-        <canvas id="mapa"> </canvas>
+        <h1 class = "titulo">Recorre el mapa con tu mascota</h1>
+        <canvas id="mapa"></canvas>
+       <button class="btnup" onmouseup="detenerMovimiento()" onmousedown="moverupCapipepo()">⬆</button> <br>
+        <button class="btnLeft" onmouseup="detenerMovimiento()" onmousedown="moverLeftCapipepo()">⬅</button>
+        <button class="btnRight"onmouseup="detenerMovimiento()" onmousedown="moverRightCapipepo()">➡</button> <br>
+        <button class="btnDown" onmouseup="detenerMovimiento()" onmousedown="moverDownCapipepo()">⬇</button> <br>
+        </div>
     </section>
         <section id ="seleccionar-ataque"> 
             <h1 class = "titulo" >Fantastic Creatures</h1>
