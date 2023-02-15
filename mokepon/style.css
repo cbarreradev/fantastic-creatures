@@ -166,7 +166,6 @@ body {
         grid-template-rows: auto auto auto;
 }
 
-
     @media (min-width: 421px) and ( max-width:820px){
         .titulo,
         .tarjetas-ataques {

@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "./",
+    "public": "./mokepon/",
     "ignore": [
       "firebase.json",
       "**/.*",

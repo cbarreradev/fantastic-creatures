@@ -31,7 +31,8 @@ let inputRatihuey
 let inputtucapalma
 let inputlangostelvis
 let inputpydos
-let MascotaJugador
+let mascotaJugador
+let mascotaJugadorObjeto
 let ataquesAnimalesfan
 let botonFuego
 let botonAgua
@@ -46,8 +47,11 @@ let VidasEnemigo = 3
 let VidasJugador = 3
 let lienzo = mapa.getContext("2d")
 let intervalo
-
+let mapaBackground = new Image()
+    mapaBackground.src = './imagenes/1/imagenDelMapa.png'
 class Animalesfantasticos {
+
+
     constructor(nombre, foto, vida) {
         this.nombre = nombre
         this.foto = foto
@@ -144,8 +148,6 @@ function selectionMascotaJugador() {
     sectionseleccionarTuMascota.style.display = "none"
     // sectionseleccionarAtaque.style.display = "flex"
     sectionVerMapa.style.display = 'flex'
-    intervalo = setInterval(pintarPersonaje, 50)
-
 
     if (inputHippoHaven.checked) {
         spanMascotaJugador.innerHTML = inputHippoHaven.id
@@ -170,6 +172,8 @@ function selectionMascotaJugador() {
     }
 
     extraerAtaques(MascotaJugador)
+    sectionVerMapa.style.display = 'flex'
+    iniciarMapa()
     SelectionMascotaEnemigo()
 }
 
@@ -317,36 +321,74 @@ function reiniciarJuego() {
 function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
-function pintarPersonaje(){
-    capipepo.x = capipepo.x +capipepo.velocidadX
-    capipepo.y = capipepo.y +capipepo.velocidadY
+function pintarcanvas(){
+
+    mascotaJugadorObjeto.x = mascotaJugadorObjeto.x +mascotaJugadorObjeto.velocidadX
+    mascotaJugadorObjeto.y = mascotaJugadorObjeto.y +mascotaJugadorObjeto.velocidadY
     lienzo.clearRect(0,0, mapa.width, mapa.height)
     lienzo.drawImage(
-        capipepo.mapaFoto,
-        capipepo.x,
-        capipepo.y,
-        capipepo.ancho,
-        capipepo.alto,
+        mascotaJugadorObjeto.mapaFoto,
+        mascotaJugadorObjeto.x,
+        mascotaJugadorObjeto.y,
+        mascotaJugadorObjeto.ancho,
+        mascotaJugadorObjeto.alto,
         )
 }
 //funcion para dar movimiento al personaje en canvas
-function moverupCapipepo(){
-    capipepo.velocidadY= -5
+function moverArriba(){
+    mascotaJugadorObjeto.velocidadY= -5
 }
-function moverLeftCapipepo(){
-    capipepo.velocidadX= -5
+function moverIzquierda(){
+    mascotaJugadorObjeto.velocidadX= -5
 }
-function moverRightCapipepo(){
-    capipepo.velocidadX= 5
+function moverDerecha(){
+    mascotaJugadorObjeto.velocidadX= 5
 }
-function moverDownCapipepo(){
-    capipepo.velocidadY= 5
+function moverAbajo(){
+    mascotaJugadorObjeto.velocidadY= 5
 }
+
 function detenerMovimiento(){
 
+    mascotaJugadorObjeto.velocidadX = 0
+    mascotaJugadorObjeto.velocidadY = 0
 }
-function detenerMovimiento(){
-    capipepo.velocidadX = 0
-    capipepo.velocidadY = 0
+//se le asigno movimiento a las teclas switch es hacer un sawnchis de if. el break es como el que para la funcion, un default es algo que hace por defecto como el else.
+function sepresionoUnaTecla(event){
+   switch (event.key) {
+       case "ArrowUp":
+           moverArriba()
+           break
+       case "ArrowDown" :
+           moverAbajo()
+           break
+       case "ArrowLeft" :
+           moverIzquierda()
+           break
+       case "ArrowRight" :
+           moverDerecha()
+           break
+       default:
+           break;
+
+   }
+
+}
+function iniciarMapa () {
+
+    mapa.width =320
+    mapa.height = 240
+    mascotaJugadorObjeto =obternerObjetoMascota(MascotaJugador)
+    intervalo = setInterval(pintarcanvas, 50)
+    window.addEventListener("keydown",sepresionoUnaTecla)
+    window.addEventListener("keyup", detenerMovimiento)
+}
+// esta funcion lo que hace es retornarnos el objeto completo del animal escojido
+function obternerObjetoMascota(){
+    for (let i = 0; i < animales.length; i++) {
+        if (MascotaJugador === animales[i].nombre) {
+           return animales[i]
+        }
+    }
 }
 window.addEventListener("load", iniciarJuego);
