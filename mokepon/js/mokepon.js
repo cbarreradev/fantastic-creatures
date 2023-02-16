@@ -1,4 +1,4 @@
-const sectionseleccionarAtaque = document.getElementById("seleccionar-ataque")
+const sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
 const sectionReiniciar = document.getElementById("REINICIAR")
 const botonMascotaJugador = document.getElementById("boton-mascota")
 const botonreiniciar = document.getElementById("boton-reiniciar")
@@ -139,7 +139,7 @@ pydos.ataques.push(
 animales.push(hippoHaven, capipepo, ratihuey, langostelvis, tucapalma, pydos)
 
 function iniciarJuego() {
-    sectionseleccionarAtaque.style.display = "none"
+    sectionSeleccionarAtaque.style.display = "none"
     sectionReiniciar.style.display = "none"
     sectionVerMapa.style.display = "none"
     animales.forEach((animales) => {
@@ -192,7 +192,7 @@ function selectionMascotaJugador() {
     extraerAtaques(MascotaJugador)
     sectionVerMapa.style.display = 'flex'
     iniciarMapa()
-    SelectionMascotaEnemigo()
+
 }
 
 function extraerAtaques(MascotaJugador) {
@@ -240,10 +240,9 @@ function secuenciaAtaques() {
     })
 }
 
-function SelectionMascotaEnemigo() {
-    let comandoAleatorio = aleatorio(0, animales.length - 1)
-    spanMascotaEnemigo.innerHTML = animales[comandoAleatorio].nombre
-    ataquesAnimalesEnemigo = animales[comandoAleatorio].ataques
+function SelectionMascotaEnemigo(enemigo) {
+    spanMascotaEnemigo.innerHTML = enemigo.nombre
+    ataquesAnimalesEnemigo = enemigo.ataques
     secuenciaAtaques()
 }
 
@@ -465,7 +464,12 @@ function revisarColicion(enemigo) {
         return
     }
     detenerMovimiento()
-    alert("Hay colicion" + enemigo.nombre)
+    sectionSeleccionarAtaque.style.display = "flex"
+    sectionVerMapa.style.display = "none"
+    SelectionMascotaEnemigo(enemigo)
+    console.log(SelectionMascotaEnemigo,)
+    //alert("Hay colicion" + enemigo.nombre)
+
 }
 
 window.addEventListener("load", iniciarJuego);
