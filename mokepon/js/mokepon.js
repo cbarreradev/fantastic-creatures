@@ -48,32 +48,51 @@ let VidasJugador = 3
 let lienzo = mapa.getContext("2d")
 let intervalo
 let mapaBackground = new Image()
-    mapaBackground.src = './imagenes/1/imagenDelMapa.png'
+mapaBackground.src = './imagenes/1/mapa.png'
+
 class Animalesfantasticos {
 
-
-    constructor(nombre, foto, vida) {
+    constructor(nombre, foto, vida, fotoMapa, x = 10, y = 10) {
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
         this.ataques = []
-        this.x = 20
-        this.y = 30
+        this.x = x
+        this.y = y
         this.ancho = 80
         this.alto = 80
         this.mapaFoto = new Image()
-        this.mapaFoto.src = foto
+        this.mapaFoto.src = fotoMapa
         this.velocidadX = 0
         this.velocidadY = 0
     }
+
+    // esta parte se declara esta funcion para pintar la mascota y se coloca el lienzo el this se usa para los tributos del objeto
+    pintarMascotafan() {
+        lienzo.drawImage(
+            this.mapaFoto,
+            this.x,
+            this.y,
+            this.ancho,
+            this.alto,
+        )
+    }
 }
 
-let hippoHaven = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5)
-let capipepo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5)
-let ratihuey = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5)
-let langostelvis = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5)
-let tucapalma = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5)
-let pydos = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5)
+let hippoHaven = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
+let capipepo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
+let ratihuey = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
+let langostelvis = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
+let tucapalma = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
+let pydos = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
+
+// los animales enemigos del mapa los numeros del final es la poccion que aparece los Enemigos en el mapa
+let hippoHavenEnemigo = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png", 800, 150)
+let capipepoEnemigo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png", 600, 169)
+let ratihueyEnemigo = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png", 150, 160)
+let langostelvisEnemigo = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png", 500, 100)
+let tucapalmaEnemigo = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png", 300, 220)
+let pydosEnemigo = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png", 500, 350)
 
 hippoHaven.ataques.push(
     {nombre: "🌊", id: "boton-agua"},
@@ -146,7 +165,6 @@ function iniciarJuego() {
 
 function selectionMascotaJugador() {
     sectionseleccionarTuMascota.style.display = "none"
-    // sectionseleccionarAtaque.style.display = "flex"
     sectionVerMapa.style.display = 'flex'
 
     if (inputHippoHaven.checked) {
@@ -321,74 +339,133 @@ function reiniciarJuego() {
 function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
-function pintarcanvas(){
 
-    mascotaJugadorObjeto.x = mascotaJugadorObjeto.x +mascotaJugadorObjeto.velocidadX
-    mascotaJugadorObjeto.y = mascotaJugadorObjeto.y +mascotaJugadorObjeto.velocidadY
-    lienzo.clearRect(0,0, mapa.width, mapa.height)
+function pintarcanvas() {
+
+    mascotaJugadorObjeto.x = mascotaJugadorObjeto.x + mascotaJugadorObjeto.velocidadX
+    mascotaJugadorObjeto.y = mascotaJugadorObjeto.y + mascotaJugadorObjeto.velocidadY
+    lienzo.clearRect(0, 0, mapa.width, mapa.height)
     lienzo.drawImage(
-        mascotaJugadorObjeto.mapaFoto,
-        mascotaJugadorObjeto.x,
-        mascotaJugadorObjeto.y,
-        mascotaJugadorObjeto.ancho,
-        mascotaJugadorObjeto.alto,
-        )
-}
-//funcion para dar movimiento al personaje en canvas
-function moverArriba(){
-    mascotaJugadorObjeto.velocidadY= -5
-}
-function moverIzquierda(){
-    mascotaJugadorObjeto.velocidadX= -5
-}
-function moverDerecha(){
-    mascotaJugadorObjeto.velocidadX= 5
-}
-function moverAbajo(){
-    mascotaJugadorObjeto.velocidadY= 5
+        mapaBackground,
+        0,
+        0,
+        mapa.width,
+        mapa.height
+    )
+
+    //se va usar el objeto que  se creo de la mascota del jugador y de ese objeto se llama a la funcion pintarMascotafan que es el enemigo
+    mascotaJugadorObjeto.pintarMascotafan()
+    hippoHavenEnemigo.pintarMascotafan()
+    capipepoEnemigo.pintarMascotafan()
+    ratihueyEnemigo.pintarMascotafan()
+    langostelvisEnemigo.pintarMascotafan()
+    tucapalmaEnemigo.pintarMascotafan()
+    pydosEnemigo.pintarMascotafan()
+
+    if (mascotaJugadorObjeto.velocidadX !== 0 || mascotaJugadorObjeto.velocidadY !== 0) {
+        revisarColicion(capipepoEnemigo)
+        revisarColicion(hippoHavenEnemigo)
+        revisarColicion(ratihueyEnemigo)
+        revisarColicion(langostelvisEnemigo)
+        revisarColicion(tucapalmaEnemigo)
+        revisarColicion(pydosEnemigo)
+
+
+    }
+
 }
 
-function detenerMovimiento(){
+//funcion para dar movimiento al personaje en canvas
+function moverArriba() {
+    mascotaJugadorObjeto.velocidadY = -5
+}
+
+function moverIzquierda() {
+    mascotaJugadorObjeto.velocidadX = -5
+}
+
+function moverDerecha() {
+    mascotaJugadorObjeto.velocidadX = 5
+}
+
+function moverAbajo() {
+    mascotaJugadorObjeto.velocidadY = 5
+}
+
+function detenerMovimiento() {
 
     mascotaJugadorObjeto.velocidadX = 0
     mascotaJugadorObjeto.velocidadY = 0
 }
-//se le asigno movimiento a las teclas switch es hacer un sawnchis de if. el break es como el que para la funcion, un default es algo que hace por defecto como el else.
-function sepresionoUnaTecla(event){
-   switch (event.key) {
-       case "ArrowUp":
-           moverArriba()
-           break
-       case "ArrowDown" :
-           moverAbajo()
-           break
-       case "ArrowLeft" :
-           moverIzquierda()
-           break
-       case "ArrowRight" :
-           moverDerecha()
-           break
-       default:
-           break;
 
-   }
+//se le asigno movimiento a las teclas switch es hacer un sawnchis de if. el break es como el que para la funcion, un default es algo que hace por defecto como el else.
+function sepresionoUnaTecla(event) {
+    switch (event.key) {
+        case "ArrowUp":
+            moverArriba()
+            break
+        case "ArrowDown" :
+            moverAbajo()
+            break
+        case "ArrowLeft" :
+            moverIzquierda()
+            break
+        case "ArrowRight" :
+            moverDerecha()
+            break
+        default:
+            break;
+
+    }
 
 }
-function iniciarMapa () {
 
-    mapa.width =320
-    mapa.height = 240
-    mascotaJugadorObjeto =obternerObjetoMascota(MascotaJugador)
+function iniciarMapa() {
+    mapa.width = 700
+    mapa.height = 500
+    mascotaJugadorObjeto = obternerObjetoMascota(MascotaJugador)
     intervalo = setInterval(pintarcanvas, 50)
-    window.addEventListener("keydown",sepresionoUnaTecla)
+    window.addEventListener("keydown", sepresionoUnaTecla)
     window.addEventListener("keyup", detenerMovimiento)
 }
+
 // esta funcion lo que hace es retornarnos el objeto completo del animal escojido
-function obternerObjetoMascota(){
+function obternerObjetoMascota() {
     for (let i = 0; i < animales.length; i++) {
         if (MascotaJugador === animales[i].nombre) {
-           return animales[i]
+            return animales[i]
         }
     }
 }
+
+// evita la colicion
+function revisarColicion(enemigo) {
+    // esto nos va a decir si se quiere sacar la izq y derecha del enemigo, que es x nos dice donde comienza que es la parte izq del enemigo a eso le sumamos el ancho para determinar la derecha
+    const arribaEnemigo = enemigo.y
+    const abajoEnemigo = enemigo.y + enemigo.alto
+    const derechaEnemigo = enemigo.x + enemigo.ancho
+    const izquierdaEnemigo = enemigo.x
+// mascota
+    const arribaMascota =
+        mascotaJugadorObjeto.y
+    const abajoMascota =
+        mascotaJugadorObjeto.y + mascotaJugadorObjeto.alto
+    const derechaMascota =
+        mascotaJugadorObjeto.x + mascotaJugadorObjeto.ancho
+    const izquierdaMascota =
+        mascotaJugadorObjeto.x
+
+
+    if (
+        abajoMascota < arribaEnemigo ||
+        arribaMascota > abajoEnemigo ||
+        derechaMascota < izquierdaEnemigo ||
+        izquierdaMascota > derechaEnemigo
+    ) {
+        return
+    }
+    detenerMovimiento()
+    alert("Hay colicion" + enemigo.nombre)
+}
+
 window.addEventListener("load", iniciarJuego);
