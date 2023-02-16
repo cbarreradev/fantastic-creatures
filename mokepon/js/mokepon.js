@@ -101,7 +101,21 @@ hippoHaven.ataques.push(
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🪴", id: "boton-tierra"},
 )
+hippoHavenEnemigo.ataques.push(
+    {nombre: "🌊", id: "boton-agua"},
+    {nombre: "🌊", id: "boton-agua"},
+    {nombre: "🌊", id: "boton-agua"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🪴", id: "boton-tierra"},
+)
 capipepo.ataques.push(
+    {nombre: "🪴", id: "boton-tierra"},
+    {nombre: "🪴", id: "boton-tierra"},
+    {nombre: "🪴", id: "boton-tierra"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🌊", id: "boton-agua"},
+)
+capipepoEnemigo.ataques.push(
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🪴", id: "boton-tierra"},
@@ -115,7 +129,21 @@ ratihuey.ataques.push(
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🌊", id: "boton-agua"},
 )
+ratihueyEnemigo.ataques.push(
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🪴", id: "boton-tierra"},
+    {nombre: "🌊", id: "boton-agua"},
+)
 langostelvis.ataques.push(
+    {nombre: "🌊", id: "boton-agua"},
+    {nombre: "🌊", id: "boton-agua"},
+    {nombre: "🌊", id: "boton-agua"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🪴", id: "boton-tierra"},
+)
+langostelvisEnemigo.ataques.push(
     {nombre: "🌊", id: "boton-agua"},
     {nombre: "🌊", id: "boton-agua"},
     {nombre: "🌊", id: "boton-agua"},
@@ -129,7 +157,21 @@ tucapalma.ataques.push(
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🌊", id: "boton-agua"},
 )
+tucapalmaEnemigo.ataques.push(
+    {nombre: "🪴", id: "boton-tierra"},
+    {nombre: "🪴", id: "boton-tierra"},
+    {nombre: "🪴", id: "boton-tierra"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🌊", id: "boton-agua"},
+)
 pydos.ataques.push(
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🔥", id: "boton-fuego"},
+    {nombre: "🪴", id: "boton-tierra"},
+    {nombre: "🌊", id: "boton-agua"},
+)
+pydosEnemigo.ataques.push(
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🔥", id: "boton-fuego"},
@@ -247,6 +289,7 @@ function SelectionMascotaEnemigo(enemigo) {
 }
 
 function ataqueAleatorioEnemigo() {
+    console.log("ataquesAnimalesEnemigo")
     let ataqueAleatorio = aleatorio(0, ataquesAnimalesEnemigo.length - 1)
 
     if (ataqueAleatorio == 0 || ataqueAleatorio == 1) {
@@ -464,6 +507,9 @@ function revisarColicion(enemigo) {
         return
     }
     detenerMovimiento()
+    //clearintervalo(intervalo)se ejecuta cada 50 esto se limpia para que no se repita las jugadas de enemigo
+    console.log("se detecto una colicion")
+    clearInterval(intervalo)
     sectionSeleccionarAtaque.style.display = "flex"
     sectionVerMapa.style.display = "none"
     SelectionMascotaEnemigo(enemigo)
