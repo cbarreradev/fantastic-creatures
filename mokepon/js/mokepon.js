@@ -17,6 +17,7 @@ const contenedorAtaques = document.getElementById("contenedorAtaques")
 const sectionVerMapa = document.getElementById("ver-mapa")
 const mapa = document.getElementById("mapa")
 
+
 const fuego = "Fuego";
 const agua = "Agua";
 const tierra = "Tierra";
@@ -49,18 +50,28 @@ let lienzo = mapa.getContext("2d")
 let intervalo
 let mapaBackground = new Image()
 mapaBackground.src = './imagenes/1/mapa.png'
+let alturaQueBuscamos
+let anchoDelMapa = window.innerWidth - 20
 
+const anchoMaximoDelMapa = 800
+ if (anchoDelMapa > anchoMaximoDelMapa) {
+     anchoDelMapa = anchoMaximoDelMapa - 20
+ }
+alturaQueBuscamos = anchoDelMapa * 600 / 800
+
+mapa.which = anchoDelMapa
+mapa.height = alturaQueBuscamos
 class Animalesfantasticos {
 
-    constructor(nombre, foto, vida, fotoMapa, x = 10, y = 10) {
+    constructor(nombre, foto, vida, fotoMapa) {
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
         this.ataques = []
-        this.x = x
-        this.y = y
-        this.ancho = 80
-        this.alto = 80
+        this.ancho = 60
+        this.alto = 60
+        this.x = aleatorio(0, mapa.width - this.ancho)
+        this.y = aleatorio(0, mapa.height - this.alto)
         this.mapaFoto = new Image()
         this.mapaFoto.src = fotoMapa
         this.velocidadX = 0
@@ -87,12 +98,12 @@ let tucapalma = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png
 let pydos = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
 
 // los animales enemigos del mapa los numeros del final es la poccion que aparece los Enemigos en el mapa
-let hippoHavenEnemigo = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png", 800, 150)
-let capipepoEnemigo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png", 600, 169)
-let ratihueyEnemigo = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png", 150, 160)
-let langostelvisEnemigo = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png", 500, 100)
-let tucapalmaEnemigo = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png", 300, 220)
-let pydosEnemigo = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png", 500, 350)
+let hippoHavenEnemigo = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
+let capipepoEnemigo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
+let ratihueyEnemigo = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
+let langostelvisEnemigo = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
+let tucapalmaEnemigo = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
+let pydosEnemigo = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
 
 hippoHaven.ataques.push(
     {nombre: "🌊", id: "boton-agua"},
