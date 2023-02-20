@@ -3,52 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Fantastic Creatures</title>
-    <link rel="icon" href="./imagenes/1/pydos.ico"  sizes="16x16">
+    <link rel="icon" href="./imagenes/1/pydos.ico" sizes="16x16">
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> /*esta lineas ayuda ajustar el tamaño del juegpo a diferentes dispocitivos*/
 
 </head>
 <body>
-    <section id ="selecciona-tu-mascota">
-        <h1 class = "titulo" > Fantastic Creatures</h1>
-        <h2 class="subtitulo">Elije a tu criatura:</h2>
-    <div  id = "contenedorTarjetas" class="tarjetas"> </div>
-        
-    <button id="boton-mascota"> ¡A luchar! </button>
-    </section>
-    <section id="ver-mapa">
-        <h1 class = "titulo">Recorre el mapa con tu mascota</h1>
-        <canvas id="mapa"></canvas>
-       <button class="btnup" onmouseup=" detenerMovimiento()" onmousedown="moverArriba()">⬆</button> <br>
-        <button class="btnLeft" onmouseup=" detenerMovimiento()" onmousedown="moverIzquierda()">⬅</button>
-        <button class="btnRight" onmouseup=" detenerMovimiento()" onmousedown="moverDerecha()">➡</button> <br>
-        <button class="btnDown" onmouseup=" detenerMovimiento()" onmousedown="moverAbajo()">⬇</button> <br>
-        </div>
-    </section>
-        <section id ="seleccionar-ataque"> 
-            <h1 class = "titulo" >Fantastic Creatures</h1>
-            <h2 class="subtitulo"> Elige tu ataque:</h2>
-           
-            <div id="contenedorAtaques"  class="tarjetas-ataques"> </div>
-            <div id= "mensajes">
-                    <p id="Resultado"> Mucha suerte </p>
-                    <section id="REINICIAR"> 
-                     <button  id="boton-reiniciar"> REINICIAR</button>
-                    </section>
-                </div>
-           
-            <div class="container-vidas">
-                <div class="comando-jugador">
-                    <P id = "vidas-jugador">0</P>
-                    <p id ="mascota-jugador"> </P>
-                    <div id="Ataques-Del-jugador"> </div>
-                </div>
-                <div class="comando-enemigo">
-                    <P id = "vidas-enemigo">0</P>
-                    <p id ="mascota-enemigo"> </P>
-                    <div id="Ataques-Del-enemigos"> </div>
-                </div>
-            </div>
+<section id="selecciona-tu-mascota">
+    <h1 class="titulo"> Fantastic Creatures</h1>
+    <h2 class="subtitulo">Elije a tu criatura:</h2>
+    <div id="contenedorTarjetas" class="tarjetas"></div>
+
+    <button id="boton-mascota"> ¡A luchar!</button>
+</section>
+<section id="ver-mapa">
+    <h2 class="subtitulo">Recorre el mapa con tu mascota</h2>
+    <canvas id="mapa"></canvas>
+    <button class="btnup" onmouseup=" detenerMovimiento()" onmousedown="moverArriba()">Arriba</button>
+    <div>
+        <button class="btnLeft" onmouseup=" detenerMovimiento()" onmousedown="moverIzquierda()">Derecha</button>
+        <button class="btnRight" onmouseup=" detenerMovimiento()" onmousedown="moverDerecha()">Izquierda</button>
+        <button class="btnDown" onmouseup=" detenerMovimiento()" onmousedown="moverAbajo()">Abajo</button>
+    </div>
+</section>
+<section id="seleccionar-ataque">
+    <h1 class="titulo">Fantastic Creatures</h1>
+    <h2 class="subtitulo"> Elige tu ataque:</h2>
+
+    <div id="contenedorAtaques" class="tarjetas-ataques"></div>
+    <div id="mensajes">
+        <p id="Resultado"> Mucha suerte </p>
+        <section id="REINICIAR">
+            <button id="boton-reiniciar"> REINICIAR</button>
         </section>
-        <script src="js/mokepon.js"></script>
-    </body>
+    </div>
+
+    <div class="container-vidas">
+        <div class="comando-jugador">
+            <P id="vidas-jugador">0</P>
+            <p id="mascota-jugador"></P>
+            <div id="Ataques-Del-jugador"></div>
+        </div>
+        <div class="comando-enemigo">
+            <P id="vidas-enemigo">0</P>
+            <p id="mascota-enemigo"></P>
+            <div id="Ataques-Del-enemigos"></div>
+        </div>
+    </div>
+</section>
+<script src="js/mokepon.js"></script>
+</body>
 </html>
