@@ -190,7 +190,8 @@ input:checked + label {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    font-size: 18px; /* Agregar esta línea para aumentar el tamaño de la letra */
+    font-size: 18px;
+    /* Agregar esta línea para aumentar el tamaño de la letra */
 }
 
 @media (min-width: 500px) and ( max-width: 820px) {

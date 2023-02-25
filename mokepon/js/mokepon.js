@@ -22,6 +22,7 @@ const fuego = "Fuego";
 const agua = "Agua";
 const tierra = "Tierra";
 
+let jugadorId = null
 let animales = []
 let ataqueJugador = []
 let ataqueEnemigo = []
@@ -54,16 +55,18 @@ let alturaQueBuscamos
 let anchoDelMapa = window.innerWidth - 20
 
 const anchoMaximoDelMapa = 800
- if (anchoDelMapa > anchoMaximoDelMapa) {
-     anchoDelMapa = anchoMaximoDelMapa - 20
- }
+if (anchoDelMapa > anchoMaximoDelMapa) {
+    anchoDelMapa = anchoMaximoDelMapa - 20
+}
 alturaQueBuscamos = anchoDelMapa * 600 / 800
 
 mapa.which = anchoDelMapa
 mapa.height = alturaQueBuscamos
+
 class Animalesfantasticos {
 
-    constructor(nombre, foto, vida, fotoMapa) {
+    constructor(nombre, foto, vida, fotoMapa, id = null) {
+        this.id = id
         this.nombre = nombre
         this.foto = foto
         this.vida = vida
@@ -97,98 +100,61 @@ let langostelvis = new Animalesfantasticos("Langostelvis", "./imagenes/1/langost
 let tucapalma = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
 let pydos = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
 
-// los animales enemigos del mapa los numeros del final es la poccion que aparece los Enemigos en el mapa
-let hippoHavenEnemigo = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
-let capipepoEnemigo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
-let ratihueyEnemigo = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
-let langostelvisEnemigo = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
-let tucapalmaEnemigo = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
-let pydosEnemigo = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
 
-hippoHaven.ataques.push(
+const HIPPOHAVEN_ATAQUES = [
     {nombre: "🌊", id: "boton-agua"},
     {nombre: "🌊", id: "boton-agua"},
     {nombre: "🌊", id: "boton-agua"},
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🪴", id: "boton-tierra"},
-)
-hippoHavenEnemigo.ataques.push(
-    {nombre: "🌊", id: "boton-agua"},
-    {nombre: "🌊", id: "boton-agua"},
-    {nombre: "🌊", id: "boton-agua"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🪴", id: "boton-tierra"},
-)
-capipepo.ataques.push(
+]
+hippoHaven.ataques.push(...HIPPOHAVEN_ATAQUES)
+
+const CAPIPEPO_ATAQUES = [
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🌊", id: "boton-agua"},
-)
-capipepoEnemigo.ataques.push(
-    {nombre: "🪴", id: "boton-tierra"},
-    {nombre: "🪴", id: "boton-tierra"},
-    {nombre: "🪴", id: "boton-tierra"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🌊", id: "boton-agua"},
-)
-ratihuey.ataques.push(
+    {nombre: "🌊", id: "boton-agua"},]
+capipepo.ataques.push(...CAPIPEPO_ATAQUES)
+
+const RATIHUEY_ATAQUES = [
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🌊", id: "boton-agua"},
-)
-ratihueyEnemigo.ataques.push(
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🪴", id: "boton-tierra"},
-    {nombre: "🌊", id: "boton-agua"},
-)
-langostelvis.ataques.push(
+]
+ratihuey.ataques.push(...RATIHUEY_ATAQUES)
+
+const LANGOSTELVIS_ATAQUES = [
     {nombre: "🌊", id: "boton-agua"},
     {nombre: "🌊", id: "boton-agua"},
     {nombre: "🌊", id: "boton-agua"},
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🪴", id: "boton-tierra"},
-)
-langostelvisEnemigo.ataques.push(
-    {nombre: "🌊", id: "boton-agua"},
-    {nombre: "🌊", id: "boton-agua"},
-    {nombre: "🌊", id: "boton-agua"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🪴", id: "boton-tierra"},
-)
-tucapalma.ataques.push(
+]
+langostelvis.ataques.push(...LANGOSTELVIS_ATAQUES)
+
+const TUCAPALMA_ATAQUES = [
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🌊", id: "boton-agua"},
-)
-tucapalmaEnemigo.ataques.push(
-    {nombre: "🪴", id: "boton-tierra"},
-    {nombre: "🪴", id: "boton-tierra"},
-    {nombre: "🪴", id: "boton-tierra"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🌊", id: "boton-agua"},
-)
-pydos.ataques.push(
+]
+tucapalma.ataques.push(...TUCAPALMA_ATAQUES)
+
+const PYDOS_ATAQUES = [
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🔥", id: "boton-fuego"},
     {nombre: "🪴", id: "boton-tierra"},
     {nombre: "🌊", id: "boton-agua"},
-)
-pydosEnemigo.ataques.push(
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🔥", id: "boton-fuego"},
-    {nombre: "🪴", id: "boton-tierra"},
-    {nombre: "🌊", id: "boton-agua"},
-)
+]
+pydos.ataques.push(...PYDOS_ATAQUES)
+
+
 animales.push(hippoHaven, capipepo, ratihuey, langostelvis, tucapalma, pydos)
 
 function iniciarJuego() {
@@ -214,6 +180,21 @@ function iniciarJuego() {
     })
     botonMascotaJugador.addEventListener("click", selectionMascotaJugador)
     botonreiniciar.addEventListener("click", reiniciarJuego)
+
+    unirseAlJuego()
+}
+
+function unirseAlJuego() {
+    fetch(`http://localhost:8080/unirse`)
+        .then(function (res) {
+            if (res.ok) {
+                res.text()
+                    .then(function (respuesta) {
+                        console.log(respuesta,)
+                        jugadorId = respuesta
+                    })
+            }
+        })
 }
 
 function selectionMascotaJugador() {
@@ -222,30 +203,42 @@ function selectionMascotaJugador() {
 
     if (inputHippoHaven.checked) {
         spanMascotaJugador.innerHTML = inputHippoHaven.id
-        MascotaJugador = inputHippoHaven.id
+        mascotaJugador = inputHippoHaven.id
     } else if (inputcapipepo.checked) {
         spanMascotaJugador.innerHTML = inputcapipepo.id
-        MascotaJugador = inputcapipepo.id
+        mascotaJugador = inputcapipepo.id
     } else if (inputRatihuey.checked) {
         spanMascotaJugador.innerHTML = inputRatihuey.id
-        MascotaJugador = inputRatihuey.id
+        mascotaJugador = inputRatihuey.id
     } else if (inputlangostelvis.checked) {
         spanMascotaJugador.innerHTML = inputlangostelvis.id
-        MascotaJugador = inputlangostelvis.id
+        mascotaJugador = inputlangostelvis.id
     } else if (inputtucapalma.checked) {
         spanMascotaJugador.innerHTML = inputtucapalma.id
-        MascotaJugador = inputtucapalma.id
+        mascotaJugador = inputtucapalma.id
     } else if (inputpydos.checked) {
         spanMascotaJugador.innerHTML = inputpydos.id
-        MascotaJugador = inputpydos.id
+        mascotaJugador = inputpydos.id
     } else {
         alert("selecciona una mascota")
     }
-
-    extraerAtaques(MascotaJugador)
+    seleccionarAnimalFantastico1(mascotaJugador)
+    extraerAtaques(mascotaJugador)
     sectionVerMapa.style.display = 'flex'
     iniciarMapa()
 
+}
+
+function seleccionarAnimalFantastico1(mascotaJugador) {
+    fetch(`http://localhost:8080/Animalesfantasticos/${jugadorId}`, {
+        method: "post",
+        headers: {
+            "content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            'animales_fantasticos': mascotaJugador
+        })
+    })
 }
 
 function extraerAtaques(MascotaJugador) {
@@ -394,7 +387,6 @@ function aleatorio(min, max) {
 }
 
 function pintarcanvas() {
-
     mascotaJugadorObjeto.x = mascotaJugadorObjeto.x + mascotaJugadorObjeto.velocidadX
     mascotaJugadorObjeto.y = mascotaJugadorObjeto.y + mascotaJugadorObjeto.velocidadY
     lienzo.clearRect(0, 0, mapa.width, mapa.height)
@@ -405,27 +397,53 @@ function pintarcanvas() {
         mapa.width,
         mapa.height
     )
-
     //se va usar el objeto que  se creo de la mascota del jugador y de ese objeto se llama a la funcion pintarMascotafan que es el enemigo
     mascotaJugadorObjeto.pintarMascotafan()
-    hippoHavenEnemigo.pintarMascotafan()
-    capipepoEnemigo.pintarMascotafan()
-    ratihueyEnemigo.pintarMascotafan()
-    langostelvisEnemigo.pintarMascotafan()
-    tucapalmaEnemigo.pintarMascotafan()
-    pydosEnemigo.pintarMascotafan()
 
-    if (mascotaJugadorObjeto.velocidadX !== 0 || mascotaJugadorObjeto.velocidadY !== 0) {
-        revisarColicion(capipepoEnemigo)
-        revisarColicion(hippoHavenEnemigo)
-        revisarColicion(ratihueyEnemigo)
-        revisarColicion(langostelvisEnemigo)
-        revisarColicion(tucapalmaEnemigo)
-        revisarColicion(pydosEnemigo)
+    enviarPosicion(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y)
 
+}
 
-    }
-
+function enviarPosicion(x, y) {
+    fetch(`http://localhost:8080/Animalesfantasticos/${jugadorId}/posicion`, {
+        method: "post",
+        headers: {
+            "content-Type": "application/json"
+        },
+        body:JSON.stringify({
+            x,
+            y
+        })
+    })
+        .then(function (res) {
+            if (res.ok) {
+                res.json()
+                    .then(function ({enemigos}) {
+                        console.log(enemigos)
+                        enemigos.forEach(function (enemigo) {
+                            if (enemigo.animalito != undefined) {
+                                const animalitoNombre = enemigo.animalito.nombre || ""
+                                if (animalitoNombre === "hippoHaven") {
+                                    animalitoEnemigo = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
+                                } else if (animalitoNombre === "capipepo") {
+                                    animalitoEnemigo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
+                                } else if (animalitoNombre === "ratihuey") {
+                                    animalitoEnemigo = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
+                                } else if (animalitoNombre === "langostelvis") {
+                                    animalitoEnemigo = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
+                                } else if (animalitoNombre === "tucapalma") {
+                                    animalitoEnemigo = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
+                                } else if (animalitoNombre === "pydos") {
+                                    animalitoEnemigo = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
+                                }
+                                animalitoEnemigo.x = enemigo.x
+                                animalitoEnemigo.y = enemigo.y
+                                animalitoEnemigo.pintarMascotafan()
+                            }
+                        })
+                    })
+            }
+        })
 }
 
 //funcion para dar movimiento al personaje en canvas
@@ -476,7 +494,7 @@ function sepresionoUnaTecla(event) {
 function iniciarMapa() {
     mapa.width = 700
     mapa.height = 500
-    mascotaJugadorObjeto = obternerObjetoMascota(MascotaJugador)
+    mascotaJugadorObjeto = obternerObjetoMascota(mascotaJugador)
     intervalo = setInterval(pintarcanvas, 50)
     window.addEventListener("keydown", sepresionoUnaTecla)
     window.addEventListener("keyup", detenerMovimiento)
@@ -485,7 +503,7 @@ function iniciarMapa() {
 // esta funcion lo que hace es retornarnos el objeto completo del animal escojido
 function obternerObjetoMascota() {
     for (let i = 0; i < animales.length; i++) {
-        if (MascotaJugador === animales[i].nombre) {
+        if (mascotaJugador === animales[i].nombre) {
             return animales[i]
         }
     }
