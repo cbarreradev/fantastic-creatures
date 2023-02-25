@@ -53,6 +53,12 @@ let mapaBackground = new Image()
 mapaBackground.src = './imagenes/1/mapa.png'
 let alturaQueBuscamos
 let anchoDelMapa = window.innerWidth - 20
+let nombreHippoHaven = 'hippohaven'
+let nombrecapipepo = 'capipepo'
+let nombreRatihuey = 'Ratihuey'
+let nombretucapalma = 'tucapalma'
+let nombrelangostelvis = 'langostelvis'
+let nombrepydos = 'pydos'
 
 const anchoMaximoDelMapa = 800
 if (anchoDelMapa > anchoMaximoDelMapa) {
@@ -79,6 +85,7 @@ class Animalesfantasticos {
         this.mapaFoto.src = fotoMapa
         this.velocidadX = 0
         this.velocidadY = 0
+
     }
 
     // esta parte se declara esta funcion para pintar la mascota y se coloca el lienzo el this se usa para los tributos del objeto
@@ -93,12 +100,12 @@ class Animalesfantasticos {
     }
 }
 
-let hippoHaven = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
-let capipepo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
-let ratihuey = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
-let langostelvis = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
-let tucapalma = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
-let pydos = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
+let hippoHaven = new Animalesfantasticos(nombreHippoHaven, "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
+let capipepo = new Animalesfantasticos(nombrecapipepo, "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
+let ratihuey = new Animalesfantasticos(nombreRatihuey, "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
+let langostelvis = new Animalesfantasticos(nombrelangostelvis, "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
+let tucapalma = new Animalesfantasticos(nombretucapalma, "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
+let pydos = new Animalesfantasticos(nombrepydos, "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
 
 
 const HIPPOHAVEN_ATAQUES = [
@@ -171,12 +178,12 @@ function iniciarJuego() {
         </label> `
         contenedorTarjetas.innerHTML += opcionDeAnimales
 
-        inputHippoHaven = document.getElementById("HippoHaven")
-        inputcapipepo = document.getElementById("Capipepo")
-        inputRatihuey = document.getElementById("Ratihuey")
-        inputtucapalma = document.getElementById("Tucapalma")
-        inputlangostelvis = document.getElementById("Langostelvis")
-        inputpydos = document.getElementById("Pydos")
+        inputHippoHaven = document.getElementById(nombreHippoHaven)
+        inputcapipepo = document.getElementById(nombrecapipepo)
+        inputRatihuey = document.getElementById(nombreRatihuey)
+        inputtucapalma = document.getElementById(nombretucapalma)
+        inputlangostelvis = document.getElementById(nombrelangostelvis)
+        inputpydos = document.getElementById(nombrepydos)
     })
     botonMascotaJugador.addEventListener("click", selectionMascotaJugador)
     botonreiniciar.addEventListener("click", reiniciarJuego)
@@ -410,7 +417,7 @@ function enviarPosicion(x, y) {
         headers: {
             "content-Type": "application/json"
         },
-        body:JSON.stringify({
+        body: JSON.stringify({
             x,
             y
         })
@@ -423,18 +430,19 @@ function enviarPosicion(x, y) {
                         enemigos.forEach(function (enemigo) {
                             if (enemigo.animalito != undefined) {
                                 const animalitoNombre = enemigo.animalito.nombre || ""
-                                if (animalitoNombre === "hippoHaven") {
-                                    animalitoEnemigo = new Animalesfantasticos("HippoHaven", "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
-                                } else if (animalitoNombre === "capipepo") {
-                                    animalitoEnemigo = new Animalesfantasticos("Capipepo", "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
-                                } else if (animalitoNombre === "ratihuey") {
-                                    animalitoEnemigo = new Animalesfantasticos("Ratihuey", "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
-                                } else if (animalitoNombre === "langostelvis") {
-                                    animalitoEnemigo = new Animalesfantasticos("Langostelvis", "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
-                                } else if (animalitoNombre === "tucapalma") {
-                                    animalitoEnemigo = new Animalesfantasticos("Tucapalma", "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
-                                } else if (animalitoNombre === "pydos") {
-                                    animalitoEnemigo = new Animalesfantasticos("Pydos", "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
+                                console.log(animalitoNombre)
+                                if (animalitoNombre === nombreHippoHaven) {
+                                    animalitoEnemigo = new Animalesfantasticos(nombreHippoHaven, "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
+                                } else if (animalitoNombre === nombrecapipepo) {
+                                    animalitoEnemigo = new Animalesfantasticos(nombrecapipepo, "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
+                                } else if (animalitoNombre === nombreRatihuey) {
+                                    animalitoEnemigo = new Animalesfantasticos(nombreRatihuey, "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
+                                } else if (animalitoNombre === nombrelangostelvis) {
+                                    animalitoEnemigo = new Animalesfantasticos(nombrelangostelvis, "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
+                                } else if (animalitoNombre === nombretucapalma) {
+                                    animalitoEnemigo = new Animalesfantasticos(nombretucapalma, "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
+                                } else if (animalitoNombre === nombrepydos) {
+                                    animalitoEnemigo = new Animalesfantasticos(nombrepydos, "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
                                 }
                                 animalitoEnemigo.x = enemigo.x
                                 animalitoEnemigo.y = enemigo.y
