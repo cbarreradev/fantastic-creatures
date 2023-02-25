@@ -24,6 +24,7 @@ const tierra = "Tierra";
 
 let jugadorId = null
 let animales = []
+let animalitoEnemigo = []
 let ataqueJugador = []
 let ataqueEnemigo = []
 let opcionDeAnimales
@@ -408,6 +409,9 @@ function pintarcanvas() {
     mascotaJugadorObjeto.pintarMascotafan()
 
     enviarPosicion(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y)
+    animalitoEnemigo.forEach(function(animales){
+        animales.pintarMascotafan()
+    })
 
 }
 
@@ -427,7 +431,8 @@ function enviarPosicion(x, y) {
                 res.json()
                     .then(function ({enemigos}) {
                         console.log(enemigos)
-                        enemigos.forEach(function (enemigo) {
+                        // map similar a (foreach lo que hace es iterar cada elemento de la lista) en cambio map se va utilizar la misma estructura por cada elemento de la lista  ejecutar esta funcion pero esto va a retornar un valor generando asi una nueva lista de la lista original
+                        animalitoEnemigo = enemigos.map(function (enemigo) {
                             if (enemigo.animalito != undefined) {
                                 const animalitoNombre = enemigo.animalito.nombre || ""
                                 console.log(animalitoNombre)
@@ -446,7 +451,8 @@ function enviarPosicion(x, y) {
                                 }
                                 animalitoEnemigo.x = enemigo.x
                                 animalitoEnemigo.y = enemigo.y
-                                animalitoEnemigo.pintarMascotafan()
+                                // return esto lo que nos va es a devolver el animaloto enemigo es el animalito de la lista de if que hice aca arriba es la que me va a devolvere y asi voy a tener la lista de animalitos
+                                return animalitoEnemigo
                             }
                         })
                     })
