@@ -23,6 +23,7 @@ const agua = "Agua";
 const tierra = "Tierra";
 
 let jugadorId = null
+let enemigoId = null
 let animales = []
 let animalitoEnemigo = []
 let ataqueJugador = []
@@ -89,7 +90,7 @@ class Animalesfantasticos {
 
     }
 
-    // esta parte se declara esta funcion para pintar la mascota y se coloca el lienzo el this se usa para los tributos del objeto
+    // se declara esta funcion para pintar la mascota y se coloca el lienzo el this se usa para los atributos del objeto
     pintarMascotafan() {
         lienzo.drawImage(
             this.mapaFoto,
@@ -206,8 +207,7 @@ function unirseAlJuego() {
 }
 
 function selectionMascotaJugador() {
-    sectionseleccionarTuMascota.style.display = "none"
-    sectionVerMapa.style.display = 'flex'
+
 
     if (inputHippoHaven.checked) {
         spanMascotaJugador.innerHTML = inputHippoHaven.id
@@ -229,7 +229,10 @@ function selectionMascotaJugador() {
         mascotaJugador = inputpydos.id
     } else {
         alert("selecciona una mascota")
+        return
+        // retur ayuda a no dejar ejecutar la funcion y si se escoje un animal se va a dejar seguir
     }
+    sectionseleccionarTuMascota.style.display = "none"
     seleccionarAnimalFantastico1(mascotaJugador)
     extraerAtaques(mascotaJugador)
     sectionVerMapa.style.display = 'flex'
@@ -289,9 +292,39 @@ function secuenciaAtaques() {
                 boton.style.background = "#112f58"
                 boton.disabled = true
             }
-            ataqueAleatorioEnemigo()
+            if (ataqueJugador.length === 5) {
+                enviarAtaques()
+            }
         })
     })
+}
+
+function enviarAtaques() {
+    fetch(`http://localhost:8080/Animalesfantasticos/${jugadorId}/ataques`, {
+        method: "post",
+        headers: {
+            "content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ataques: ataqueJugador
+        })
+    })
+    intervalo = setInterval(obtenerAtaques, 50)
+}
+
+function obtenerAtaques() {
+    fetch(`http://localhost:8080/Animalesfantasticos/${enemigoId}/ataques`)
+        .then(function (res) {
+            if (res.ok) {
+                res.json()
+                    .then(function ({ataques}) {
+                        if (ataques.length === 5) {
+                            ataqueEnemigo = ataques
+                            combate()
+                        }
+                    })
+            }
+        })
 }
 
 function SelectionMascotaEnemigo(enemigo) {
@@ -327,7 +360,8 @@ function indexAmbosOponentes(jugador, enemigo) {
 }
 
 function combate() {
-    console.log(ataqueJugador, ataqueEnemigo)
+    clearInterval(intervalo)
+    // console.log(ataqueJugador, ataqueEnemigo)
     for (let index = 0; index < ataqueJugador.length; index++) {
         if (ataqueJugador[index] === ataqueEnemigo[index]) {
             indexAmbosOponentes(index, index)
@@ -407,12 +441,15 @@ function pintarcanvas() {
     )
     //se va usar el objeto que  se creo de la mascota del jugador y de ese objeto se llama a la funcion pintarMascotafan que es el enemigo
     mascotaJugadorObjeto.pintarMascotafan()
-
     enviarPosicion(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y)
-    animalitoEnemigo.forEach(function(animales){
-        animales.pintarMascotafan()
+    console.log(animalitoEnemigo)
+    animalitoEnemigo.forEach(function (animales) {
+        if (animales !== undefined) {
+            animales.pintarMascotafan()
+            // esta revision lo que hace es mirar la colicion entre en un jugador y otro cuando se chocan y tomara let de animales y lo usaremos aca en esta funcion que sew pintara mas abajo
+            revisarColicion(animales)
+        }
     })
-
 }
 
 function enviarPosicion(x, y) {
@@ -430,25 +467,25 @@ function enviarPosicion(x, y) {
             if (res.ok) {
                 res.json()
                     .then(function ({enemigos}) {
-                        console.log(enemigos)
                         // map similar a (foreach lo que hace es iterar cada elemento de la lista) en cambio map se va utilizar la misma estructura por cada elemento de la lista  ejecutar esta funcion pero esto va a retornar un valor generando asi una nueva lista de la lista original
                         animalitoEnemigo = enemigos.map(function (enemigo) {
+                            let animalitoEnemigo = null
                             if (enemigo.animalito != undefined) {
                                 const animalitoNombre = enemigo.animalito.nombre || ""
-                                console.log(animalitoNombre)
                                 if (animalitoNombre === nombreHippoHaven) {
-                                    animalitoEnemigo = new Animalesfantasticos(nombreHippoHaven, "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png")
+                                    animalitoEnemigo = new Animalesfantasticos(nombreHippoHaven, "./imagenes/1/hipodoge.png", 5, "./imagenes/1/hipodoge.png", enemigo.id)
                                 } else if (animalitoNombre === nombrecapipepo) {
-                                    animalitoEnemigo = new Animalesfantasticos(nombrecapipepo, "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png")
+                                    animalitoEnemigo = new Animalesfantasticos(nombrecapipepo, "./imagenes/1/capipepo-.png", 5, "./imagenes/1/capipepo-.png", enemigo.id)
                                 } else if (animalitoNombre === nombreRatihuey) {
-                                    animalitoEnemigo = new Animalesfantasticos(nombreRatihuey, "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png")
+                                    animalitoEnemigo = new Animalesfantasticos(nombreRatihuey, "./imagenes/1/ratigueya-.png", 5, "./imagenes/1/ratigueya-.png", enemigo.id)
                                 } else if (animalitoNombre === nombrelangostelvis) {
-                                    animalitoEnemigo = new Animalesfantasticos(nombrelangostelvis, "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png")
+                                    animalitoEnemigo = new Animalesfantasticos(nombrelangostelvis, "./imagenes/1/langostelvis.png", 5, "./imagenes/1/langostelvis.png", enemigo.id)
                                 } else if (animalitoNombre === nombretucapalma) {
-                                    animalitoEnemigo = new Animalesfantasticos(nombretucapalma, "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png")
+                                    animalitoEnemigo = new Animalesfantasticos(nombretucapalma, "./imagenes/1/tucapalma.png", 5, "./imagenes/1/tucapalma.png", enemigo.id)
                                 } else if (animalitoNombre === nombrepydos) {
-                                    animalitoEnemigo = new Animalesfantasticos(nombrepydos, "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png")
+                                    animalitoEnemigo = new Animalesfantasticos(nombrepydos, "./imagenes/1/pydos.png", 5, "./imagenes/1/pydos.png", enemigo.id)
                                 }
+                                // el enemigo.id es el que colocamos el la clase animales y el que se referencia en las coliciones
                                 animalitoEnemigo.x = enemigo.x
                                 animalitoEnemigo.y = enemigo.y
                                 // return esto lo que nos va es a devolver el animaloto enemigo es el animalito de la lista de if que hice aca arriba es la que me va a devolvere y asi voy a tener la lista de animalitos
@@ -510,6 +547,7 @@ function iniciarMapa() {
     mapa.height = 500
     mascotaJugadorObjeto = obternerObjetoMascota(mascotaJugador)
     intervalo = setInterval(pintarcanvas, 50)
+    // pintarcanvas()
     window.addEventListener("keydown", sepresionoUnaTecla)
     window.addEventListener("keyup", detenerMovimiento)
 }
@@ -540,7 +578,6 @@ function revisarColicion(enemigo) {
     const izquierdaMascota =
         mascotaJugadorObjeto.x
 
-
     if (
         abajoMascota < arribaEnemigo ||
         arribaMascota > abajoEnemigo ||
@@ -550,13 +587,16 @@ function revisarColicion(enemigo) {
         return
     }
     detenerMovimiento()
-    //clearintervalo(intervalo)se ejecuta cada 50 esto se limpia para que no se repita las jugadas de enemigo
-    console.log("se detecto una colicion")
     clearInterval(intervalo)
+    //clearintervalo(intervalo)se ejecuta cada 50 esto se limpia para que no se repita las jugadas de enemigo
+    console.log("se detecto una colicion");
+    // este id de enemigo.id es el que le se le puso a la clase animales este es el id que se esta usando biene desde el baken
+    enemigoId = enemigo.id
+
     sectionSeleccionarAtaque.style.display = "flex"
     sectionVerMapa.style.display = "none"
     SelectionMascotaEnemigo(enemigo)
-    console.log(SelectionMascotaEnemigo,)
+    console.log(SelectionMascotaEnemigo)
     //alert("Hay colicion" + enemigo.nombre)
 
 }

@@ -3,7 +3,7 @@
 body {
 
     font-family: 'Special Elite', cursive;
-    background-image: url(./imagenes/fondo.png);
+    background-image: url(public/imagenes/fondo.png);
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
